@@ -1,0 +1,45 @@
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import morgan from "morgan";
+import path from 'path';
+import bodyParser from "body-parser";
+import errorMiddleware from "./middleware/errorMiddleware.js";
+import helmet from "helmet";
+import dbConnection from "./dbConfig/index.js";
+import router from "./routes/index.js";
+
+
+const __dirname = path.resolve(path.dirname(""));
+
+dotenv.config();
+
+// Use import.meta.url to get the directory name
+
+
+
+
+const app = express();
+app.use(express.static(path.join(__dirname, "views/build")));
+const PORT = process.env.PORT || 4000;
+
+app.use(helmet());
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+app.use(router);
+
+dbConnection();
+
+// Serve static files from the "views" directory
+app.use(express.static(path.join(__dirname, 'views')));
+
+// Middleware
+app.use(errorMiddleware);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port number ${PORT}`);
+});

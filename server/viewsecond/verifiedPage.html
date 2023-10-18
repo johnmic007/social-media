@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+   
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+ 
+    <title>FunSoo</title>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon">
+        <span id="statusIcon">
+
+        </span>
+      </div>
+      <div id="statusMessage" class="">
+        <a href="http://localhost:3000/login" id="btn" class="">Login</a>
+      </div>
+      <script>
+        // get the message parameter from the url 
+
+        const urlParams=new URLSearchParams(window.location.search)
+        const message=urlParams.get('message');
+        const status=urlParams.get('status');
+
+        // get the card, status icon and status message element
+
+        const card =document.querySelector('.card')
+        const statusIcon=document.getElementById('statusIcon');
+        const statusMessage=document.getElementById('statusMessage');
+        const btn=document.getElementById('btn')
+
+        // display 
+
+        if(status === 'sucess'){
+          statusIcon.innerHTML='√';
+          statusMessage.textContent=message;
+          card.classList.add('sucess')
+          statusIcon.classList.add('sucess')
+          statusMessage.classList.add('sucess')
+          btn.classList.add('showBtn')
+        }else if(status === 'error'){
+          statusIcon.innerHTML='✘';
+          statusMessage.textContent=message;
+          card.classList.add('error')
+          statusIcon.classList.add('error')
+          statusMessage.classList.add('error')
+          btn.classList.add('hideBtn')
+        }else{
+          statusIcon.innerHTML='✘';
+          statusMessage.textContent=message;
+          card.classList.add('error')
+          statusIcon.classList.add('error')
+          statusMessage.classList.add('error')
+          btn.classList.add('hideBtn')
+        }
+      </script>
+    </div>
+  </body>
+</html>
